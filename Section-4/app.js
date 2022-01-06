@@ -20,15 +20,14 @@ let courses = [
 
 app.get("/", (req, res) => res.send("Hello World!"));
 
-app.get("/api/course", (req, res) => {
-  res.send([1, 2, 3, 4, 5]);
+app.get("/api/courses", (req, res) => {
+  res.send(courses);
 });
 
 app.get("/api/course/:id", (req, res) => {
   let course = courses.find((item) => {
     return item.id == parseInt(req.params.id);
   });
-  console.log(course);
 
   if (!course) {
     res.status(404).send("404 - Course not found");
@@ -38,15 +37,11 @@ app.get("/api/course/:id", (req, res) => {
 });
 
 app.post("/api/courses", (req, res) => {
-  const schema = {
-    name: Joi.string().min(3).required(),
-  };
+  let { error } = validateCourse(req.body);
 
-  const result = Joi.validate(req.body, schema);
-
-  if (result.error) {
+  if (error) {
     // 400 Bad request
-    res.status(400).send(result.error.details[0].message);
+    res.status(400).send(error.details[0].message);
     return;
   }
 
@@ -58,6 +53,35 @@ app.post("/api/courses", (req, res) => {
   courses.push(course);
   res.send(courses);
 });
+
+app.put("/api/courses/:id", (req, res) => {
+  let course = courses.find((item) => {
+    return item.id == parseInt(req.params.id);
+  });
+
+  if (!course) {
+    res.status(404).send("404 - Course not found");
+  }
+
+  let { error } = validateCourse(req.body);
+
+  if (error) {
+    // 400 Bad request
+    res.status(400).send(error.details[0].message);
+    return;
+  }
+
+  course.name = req.body.name;
+  res.send(course);
+});
+
+const validateCourse = (course) => {
+  const schema = {
+    name: Joi.string().min(3).required(),
+  };
+
+  return Joi.validate(course, schema);
+};
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

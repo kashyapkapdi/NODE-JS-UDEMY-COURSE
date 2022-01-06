@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 
+app.use(express.json());
+
 let courses = [
   {
     id: 1,
@@ -22,7 +24,6 @@ app.get("/api/course", (req, res) => {
   res.send([1, 2, 3, 4, 5]);
 });
 
-//this code for id params
 app.get("/api/course/:id", (req, res) => {
   let course = courses.find((item) => {
     return item.id == parseInt(req.params.id);
@@ -34,6 +35,16 @@ app.get("/api/course/:id", (req, res) => {
   } else {
     res.send(JSON.stringify(course));
   }
+});
+
+app.post("/api/courses", (req, res) => {
+  const course = {
+    id: courses.length + 1,
+    name: req.body.name,
+  };
+
+  courses.push(course);
+  res.send(courses);
 });
 
 const port = process.env.PORT || 3000;

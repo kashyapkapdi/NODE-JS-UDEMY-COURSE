@@ -1,0 +1,12 @@
+{
+  "name": "Sec-4",
+  "version": "1.0.0",
+  "description": "this is example of mosh hamedani's course",
+  "main": "app.js",
+  "author": "kashyap.kapdi",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.2",
+    "nodemon": "^2.0.15"
+  }
+}

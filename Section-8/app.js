@@ -21,8 +21,10 @@ const courseSchema = new mongoose.Schema({
   name: { type: String, required: true, minlength: 2, maxlength: 150 },
   category: {
     type: String,
-    enum: ["web", "mobile", "network"],
+    enum: ["web-server", "mobile", "network"],
     required: true,
+    lowercase: true,
+    trim: true,
   },
   author: String,
   tags: {
@@ -41,6 +43,8 @@ const courseSchema = new mongoose.Schema({
     required: function () {
       return this.isPublished;
     },
+    get: (v) => Math.round(v),
+    set: (v) => Math.round(v),
   },
 });
 
@@ -48,12 +52,12 @@ const Course = mongoose.model("course", courseSchema);
 
 const createCourse = async () => {
   const course = new Course({
-    name: "R",
-    category: "-",
+    name: "React Js",
+    category: "web-server ",
     author: "Kashyap Kapdi",
-    tags: ["web"],
+    tags: ["React Js", "Front End"],
     isPublished: true,
-    price: 20,
+    price: 20.7,
   });
 
   try {

@@ -38,4 +38,10 @@ const createCourse = async () => {
   console.log(result);
 };
 
-createCourse();
+const getCourses = async () => {
+  const courses = await Course.find({ tags: "React js" });
+
+  console.log(courses);
+};
+
+getCourses();

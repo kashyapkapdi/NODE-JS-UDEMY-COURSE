@@ -1,0 +1,12 @@
+{
+  "name": "Sec-7",
+  "version": "1.0.0",
+  "description": "This is section 07 form udemy",
+  "main": "app.js",
+  "author": "kashyap.kapdi",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.2",
+    "mongoose": "^6.1.5"
+  }
+}

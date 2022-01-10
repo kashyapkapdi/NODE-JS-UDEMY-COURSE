@@ -1,0 +1,12 @@
+{
+  "name": "Sec-8",
+  "version": "1.0.0",
+  "description": "This is the section-8",
+  "main": "app.js",
+  "author": "kashyap.kapdi",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.2",
+    "mongoose": "^6.1.5"
+  }
+}

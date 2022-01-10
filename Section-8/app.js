@@ -18,21 +18,34 @@ mongoose
   });
 
 const courseSchema = new mongoose.Schema({
-  name: { type: String, required: true },
+  name: { type: String, required: true, minlength: 2, maxlength: 150 },
+  category: {
+    type: String,
+    enum: ["web", "mobile", "network"],
+    required: true,
+  },
   author: String,
   tags: [String],
   date: { type: Date, default: Date.now },
   isPublished: Boolean,
+  price: {
+    type: Number,
+    required: function () {
+      return this.isPublished;
+    },
+  },
 });
 
 const Course = mongoose.model("course", courseSchema);
 
 const createCourse = async () => {
   const course = new Course({
-    // name: "React js Course",
+    name: "React Js",
+    category: "web",
     author: "Kashyap Kapdi",
     tags: ["React js", "Frontend"],
-    isPublished: true,
+    isPublished: false,
+    price: 20,
   });
 
   try {
@@ -68,7 +81,5 @@ const removeCourse = async (id) => {
   const result = await Course.deleteOne({ _id: id });
   console.log(result);
 };
-
-// removeCourse("61dc044d14a68cd556af8e25");
 
 createCourse();

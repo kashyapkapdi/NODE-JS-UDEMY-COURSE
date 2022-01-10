@@ -28,13 +28,8 @@ const courseSchema = new mongoose.Schema({
   tags: {
     type: Array,
     validate: {
-      isAsync: true,
-      validator: function (v, callback) {
-        setTimeout(() => {
-          //Do here some Async task.
-          const result = v && v.length > 0;
-          callback(result);
-        }, 4000);
+      validator: function (v) {
+        return v && v.length > 0;
       },
       message: "A course should have at least one tag.",
     },
@@ -53,19 +48,21 @@ const Course = mongoose.model("course", courseSchema);
 
 const createCourse = async () => {
   const course = new Course({
-    name: "React Js",
-    category: "web",
+    name: "R",
+    category: "-",
     author: "Kashyap Kapdi",
-    tags: null,
-    isPublished: false,
+    tags: ["web"],
+    isPublished: true,
     price: 20,
   });
 
   try {
     const result = await course.save();
     console.log(result);
-  } catch (error) {
-    console.log(error.message);
+  } catch (err) {
+    for (let filed in err.errors) {
+      console.log(err.errors[filed].message);
+    }
   }
 };
 

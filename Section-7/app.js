@@ -44,4 +44,19 @@ const getCourses = async () => {
   console.log(courses);
 };
 
-getCourses();
+const updateCourse = async (id) => {
+  const course = await Course.findByIdAndUpdate(
+    id,
+    {
+      $set: {
+        author: "Prithvi Patel",
+        isPublished: false,
+      },
+    },
+    { new: true }
+  );
+
+  console.log(course);
+};
+
+updateCourse("61dc044d14a68cd556af8e25");
